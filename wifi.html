@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="km">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0D4F87">
+    <meta name="description" content="ចូលភ្ជាប់ Wi-Fi តាមរយៈ QR Code | អ.ម.ត">
+    <title>ភ្ជាប់ Wi-Fi | អ.ម.ត</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Moul&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Suwannaphum:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="app">
+
+        <div class="website-container">
+
+            <header class="cover-header">
+
+                <div class="cover-image">
+                    <img src="Images/Amt_Cover.jpg" alt="AMT Cover">
+                </div>
+
+                <div class="logo-container">
+                    <img src="Images/LogoAMT.jpg" alt="AMT Logo" class="amt-logo">
+                </div>
+
+            </header>
+
+            <section class="wifi-content">
+
+                <a href="index.html" class="back-button">
+                    <span class="back-arrow" aria-hidden="true">←</span>
+                    <span>ត្រឡប់ទៅទំព័រដើម</span>
+                </a>
+
+                <div class="wifi-header">
+
+                    <h1>ភ្ជាប់ Wi-Fi</h1>
+
+                    <p>ស្កេន QR Code ដើម្បីភ្ជាប់ទៅកាន់ Wi-Fi</p>
+
+                </div>
+
+                <div class="wifi-grid">
+
+                    <div class="qr-section">
+
+                        <div class="qr-card">
+                            <img src="Images/WiFi-QR.png" alt="Wi-Fi QR Code" class="qr-image">
+                        </div>
+
+                        <p class="qr-instruction">
+                            បើក Camera រួចស្កេន QR Code
+                            ដើម្បីភ្ជាប់ Wi-Fi
+                        </p>
+
+                    </div>
+
+                    <div class="wifi-info-card">
+
+                        <div class="wifi-info">
+
+                            <div>
+                                <span class="info-label">ឈ្មោះ Wi-Fi</span>
+                                <strong class="wifi-value" id="wifi-name"></strong>
+                            </div>
+
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <div class="wifi-info">
+
+                            <div>
+                                <span class="info-label">ពាក្យសម្ងាត់</span>
+                                <strong class="wifi-value password" id="wifi-password"></strong>
+                            </div>
+
+                            <button type="button" id="copy-button" class="copy-button">
+                                <span id="copy-text">ចម្លង</span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <footer class="footer">
+                <p><strong>សមាគមសិស្ស-និស្សិត អាហារូបករណ៍ អ.ម.ត</strong></p>
+            </footer>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
