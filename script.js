@@ -2,7 +2,7 @@ const WIFI_NETWORKS = [
     {
         title: "Wi-Fi ជាន់ទី ៧",
         name: "3NGO-Building_F7",
-        password: "20270107",
+        password: "01062026",
         qrImage: "Images/WiFi-QR.png"
     },
     {
