@@ -1,19 +1,113 @@
-const WIFI_NAME = "3NGO-Building_F7";
-const WIFI_PASSWORD = "20270107";
+const WIFI_NETWORKS = [
+    {
+        title: "Wi-Fi ជាន់ទី ៧",
+        name: "3NGO-Building_F7",
+        password: "20270107",
+        qrImage: "Images/WiFi-QR.png"
+    },
+    {
+        title: "Wi-Fi ជាន់ទី ៩",
+        name: "A.M.T.OFFICE",
+        password: "AMT@2026",
+        qrImage: "Images/AMT_OFFICE.png"
+    }
+];
 
-const wifiName = document.getElementById("wifi-name");
-const wifiPassword = document.getElementById("wifi-password");
+function escapeHTML(value) {
 
-if (wifiName) {
-    wifiName.textContent = WIFI_NAME;
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
 }
 
-if (wifiPassword) {
-    wifiPassword.textContent = WIFI_PASSWORD;
+function buildQrHtml(wifi) {
+
+    const name = escapeHTML(wifi.name);
+
+    if (wifi.qrImage) {
+
+        return (
+            '<div class="qr-card">' +
+            '<img src="' + escapeHTML(wifi.qrImage) + '" alt="Wi-Fi QR Code ' + name + '" class="qr-image">' +
+            '</div>'
+        );
+
+    }
+
+    return (
+        '<div class="qr-placeholder">' +
+        '<span class="qr-placeholder-icon" aria-hidden="true">\u2706</span>' +
+        '<p class="qr-placeholder-text">ដាក់ QR Code របស់អ្នកនៅទីនេះ</p>' +
+        '</div>'
+    );
+
 }
 
-const copyButton = document.getElementById("copy-button");
-const copyText = document.getElementById("copy-text");
+function buildWifiCard(wifi) {
+
+    const title = escapeHTML(wifi.title);
+    const name = escapeHTML(wifi.name);
+    const password = escapeHTML(wifi.password);
+
+    return (
+        '<article class="wifi-network-card">' +
+
+        '<div class="qr-section">' +
+
+        buildQrHtml(wifi) +
+
+        '<p class="qr-instruction">' +
+        'បើក Camera រួចស្កេន QR Code' +
+        '<br>' +
+        'ដើម្បីភ្ជាប់ Wi-Fi' +
+        '</p>' +
+
+        '</div>' +
+
+        '<div class="wifi-info-card">' +
+
+        '<h2 class="wifi-network-title">' + title + '</h2>' +
+
+        '<div class="wifi-info">' +
+
+        '<div>' +
+        '<span class="info-label">ឈ្មោះ Wi-Fi</span>' +
+        '<strong class="wifi-value">' + name + '</strong>' +
+        '</div>' +
+
+        '</div>' +
+
+        '<div class="divider"></div>' +
+
+        '<div class="wifi-info">' +
+
+        '<div>' +
+        '<span class="info-label">ពាក្យសម្ងាត់</span>' +
+        '<strong class="wifi-value password">' + password + '</strong>' +
+        '</div>' +
+
+        '<button type="button" class="copy-button" data-password="' + password + '">' +
+        '<span class="copy-text">ចម្លង</span>' +
+        '</button>' +
+
+        '</div>' +
+
+        '</div>' +
+
+        '</article>'
+    );
+
+}
+
+const wifiList = document.getElementById("wifi-list");
+
+if (wifiList) {
+    wifiList.innerHTML = WIFI_NETWORKS.map(buildWifiCard).join("");
+}
 
 function fallbackCopy(text) {
 
@@ -47,21 +141,35 @@ function fallbackCopy(text) {
 
 }
 
-async function copyPassword() {
+async function copyPassword(event) {
+
+    const button = event.target.closest(".copy-button");
+
+    if (!button) {
+        return;
+    }
+
+    const password = button.getAttribute("data-password");
+
+    const copyText = button.querySelector(".copy-text");
+
+    if (!password) {
+        return;
+    }
 
     try {
 
         if (navigator.clipboard && window.isSecureContext) {
 
-            await navigator.clipboard.writeText(WIFI_PASSWORD);
+            await navigator.clipboard.writeText(password);
 
-        } else if (!fallbackCopy(WIFI_PASSWORD)) {
+        } else if (!fallbackCopy(password)) {
 
             throw new Error("Copy method unavailable");
 
         }
 
-        showCopied();
+        showCopied(button, copyText);
 
     } catch (error) {
 
@@ -71,26 +179,28 @@ async function copyPassword() {
 
 }
 
-function showCopied() {
+function showCopied(button, copyText) {
 
-    if (!copyButton || !copyText) {
+    if (!button || !copyText) {
         return;
     }
 
     copyText.textContent = "បានចម្លង!";
 
-    copyButton.classList.add("copied");
+    button.classList.add("copied");
 
     setTimeout(function () {
 
         copyText.textContent = "ចម្លង";
 
-        copyButton.classList.remove("copied");
+        button.classList.remove("copied");
 
     }, 2000);
 
 }
 
-if (copyButton) {
-    copyButton.addEventListener("click", copyPassword);
+const wifiListContainer = document.getElementById("wifi-list");
+
+if (wifiListContainer) {
+    wifiListContainer.addEventListener("click", copyPassword);
 }
